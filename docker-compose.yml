@@ -1,37 +1,37 @@
 version: "3.4"
 services:
   beacon-chain:
-    image: "beacon-chain.prysm.dnp.dappnode.eth:3.0.14"
+    image: beacon-chain.prysm.dnp.dappnode.eth:3.0.14
     build:
       context: beacon-chain
       args:
-        UPSTREAM_VERSION: v5.0.0
+        UPSTREAM_VERSION: v5.1.0
     volumes:
-      - "beacon-chain-data:/data"
+      - beacon-chain-data:/data
     ports:
-      - "13103:13103/tcp"
-      - "12103:12103/udp"
+      - 13103:13103/tcp
+      - 12103:12103/udp
     restart: unless-stopped
     environment:
       P2P_TCP_PORT: 13103
       P2P_UDP_PORT: 12103
       CHECKPOINT_SYNC_URL: ""
-      CORSDOMAIN: "http://prysm.dappnode"
+      CORSDOMAIN: http://prysm.dappnode
       EXTRA_OPTS: ""
       FEE_RECIPIENT_ADDRESS: ""
   validator:
-    image: "validator.prysm.dnp.dappnode.eth:3.0.14"
+    image: validator.prysm.dnp.dappnode.eth:3.0.14
     build:
       context: validator
       args:
-        UPSTREAM_VERSION: v5.0.0
+        UPSTREAM_VERSION: v5.1.0
     volumes:
-      - "validator-data:/root/"
+      - validator-data:/root/
     restart: unless-stopped
     environment:
       LOG_TYPE: INFO
-      BEACON_RPC_PROVIDER: "beacon-chain.prysm.dappnode:4000"
-      BEACON_RPC_GATEWAY_PROVIDER: "beacon-chain.prysm.dappnode:3500"
+      BEACON_RPC_PROVIDER: beacon-chain.prysm.dappnode:4000
+      BEACON_RPC_GATEWAY_PROVIDER: beacon-chain.prysm.dappnode:3500
       GRAFFITI: validating_from_DAppNode
       EXTRA_OPTS: ""
       FEE_RECIPIENT_ADDRESS: ""
